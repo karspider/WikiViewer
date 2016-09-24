@@ -1,0 +1,51 @@
+
+<!DOCTYPE html><html class=''>
+<head><script src='//assets.codepen.io/assets/editor/live/console_runner-d0a557e5cb67f9cd9bbb9673355c7e8e.js'></script><script src='//assets.codepen.io/assets/editor/live/events_runner-21174b4c7273cfddc124acb0876792e0.js'></script><script src='//assets.codepen.io/assets/editor/live/css_live_reload_init-7618a0de08795409d8f6c9ef6805f7b2.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="canonical" href="http://codepen.io/karspider/pen/pEZprV" />
+
+
+<style class="cp-pen-styles">body{
+  background-color:#000040;
+  color:white;
+  font-family:sans-serif;
+  padding:10px;
+  text-align:center;
+}
+
+.randomer{
+  color:white;
+}
+.diventry {
+  background-color:white;
+  padding: 1px 15px 1px 15px;
+  margin:30px;
+}
+.diventry:hover{
+  background-color:silver;
+  border-left:thick solid red;
+}
+.aentry{
+  text-decoration:none;
+  color:black;
+}</style></head><body>
+<h1>Wikipedia Viewer</h1>
+<p><a class="randomer" href="https://en.wikipedia.org/wiki/Special:Random">Click here for a random article</a></p>
+<input placeholder="Search for articles..."></input>
+<button id="srch">Search</butkjton>
+
+<script src='//assets.codepen.io/assets/common/stopExecutionOnTimeout-53beeb1a007ec32040abaf4c9385ebfc.js'></script><script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script><script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js'></script>
+<script>$(document).ready(function () {
+    $('#srch').on('click', function () {
+        var search = $('input').val();
+        $.getJSON('http://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=' + search + '&format=json&callback=?', function (json) {
+            $('.entry').remove();
+            json.query.search.forEach(function (val) {
+                $('body').append('<a class=\'aentry\' href=\'https://en.wikipedia.org/wiki/' + val.title + '\'><div class=\'diventry\'><h2>' + val.title + '</h2><p>' + val.snippet + '</p></div></a>');
+            });
+        }).fail(function () {
+            alert('error');
+        });
+    });
+});
+//# sourceURL=pen.js
+</script>
+</body></html>
